@@ -31,7 +31,7 @@ spec:
           sh 'mvn -version'
         }
         container('busybox') {
-          sh '/bin/busybox'
+          sh 'sleep 60'
         }
       }
     }
