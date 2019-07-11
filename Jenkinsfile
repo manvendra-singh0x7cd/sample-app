@@ -15,18 +15,7 @@ spec:
     command:
     - /busybox/cat
     tty: true
-    volumeMounts:
-      - name: aws-secret
-        mountPath: /root/.aws/
-      - name: docker-config
-        mountPath: /kaniko/.docker
-  volumes:
-  - name: aws-secret
-    secret:
-      secretName: aws-secret
-  - name: docker-config
-    configMap:
-      name: docker-config
+
 """
     }
   }
