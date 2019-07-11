@@ -1,4 +1,9 @@
 pipeline {
+  environment {
+    DOCKER_REPO="341707006720.dkr.ecr.us-east-1.amazonaws.com/sourcekube/jnlp-slave"
+    DOCKE_IMAGE_TAG="latest"
+    APPLICATION_REPO="https://github.com/jenkinsci/docker-jnlp-slave.git"
+  }
   agent {
     kubernetes {
       defaultContainer 'jnlp'
@@ -36,10 +41,10 @@ spec:
         PATH = "/busybox:/kaniko:$PATH"
       }
       steps {
-        git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+        git "${env.APPLICATION_REPO}"
         container(name: 'kaniko', shell: '/busybox/sh') {
             sh '''#!/busybox/sh
-            /kaniko/executor -f `pwd`/Dockerfile -c `pwd`  --cache=true --destination=341707006720.dkr.ecr.us-east-1.amazonaws.com/sourcekube/jnlp-slave:latest
+            /kaniko/executor -f `pwd`/Dockerfile -c `pwd`  --cache=true --destination="$DOCKER_REPO":"$DOCKER_IMAGE_TAG"
             '''
         }
       }
